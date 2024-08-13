@@ -1,8 +1,20 @@
+import styled from "styled-components";
+
+import { LeftAside } from "./components/LeftAside";
+import { MainContent } from "./components/MainContent";
+
+const AppContainer = styled.div`
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+`;
+
 function App() {
   return (
-    <>
-      <h1 id="title">Hello World! =)</h1>
-    </>
+    <AppContainer>
+      <LeftAside />
+      <MainContent />
+    </AppContainer>
   );
 }
 
