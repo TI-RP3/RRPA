@@ -9,7 +9,6 @@ const Container = styled.main`
   justify-content: center;
   gap: 30px;
   width: 70%;
-  min-width: 724px;
   background-color: #f4f9f6;
   color: #222;
 
@@ -121,6 +120,17 @@ const Container = styled.main`
     border: 2px solid #000;
     width: 65%;
     bottom: 8px;
+  }
+
+  @media (max-width: 1010px) {
+    #women-pointing-svg,
+    #guy-with-pencil-svg {
+      display: none;
+    }
+
+    #svgs-floor {
+      display: none;
+    }
   }
 `;
 
