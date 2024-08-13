@@ -1,13 +1,17 @@
+import styled from "styled-components";
 import { FaArrowRight } from "react-icons/fa";
 import { TbHelp, TbLogout } from "react-icons/tb";
-import styled from "styled-components";
+import { Bounce, toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import { useEffect } from "react";
 
 const Container = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 30px;
+  justify-content: start;
+  gap: 200px;
   width: 70%;
   background-color: #f4f9f6;
   color: #222;
@@ -15,12 +19,12 @@ const Container = styled.main`
   .help_and_close_links {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    align-items: flex-start;
     gap: 10px;
     width: 100%;
-    position: fixed;
+    position: relative;
     top: 16px;
-    right: 16px;
+    left: 16px;
 
     a {
       display: flex;
@@ -70,8 +74,10 @@ const Container = styled.main`
   .passed_reports_link {
     width: 250px;
     color: #222;
+    text-decoration: none;
 
     span {
+      margin-top: 10px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -135,36 +141,86 @@ const Container = styled.main`
 `;
 
 export const MainContent = () => {
+  useEffect(() => {
+    toast("Seu relatório foi gerado! =D", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
+  }, []);
+
   return (
-    <Container>
-      <div className="help_and_close_links">
-        <a href="">
-          Ajuda <TbHelp />
-        </a>
-        <a href="">
-          Fechar aplicativo <TbLogout />
-        </a>
-      </div>
-      <div className="insert_table_button">
-        <img src="/excel-icon.svg" alt="Ícone de arquivo excel" />
-        <p>Clique para selecionar e inserir a tabela de registros de ponto</p>
-      </div>
-      <a href="" className="passed_reports_link">
-        <span>
-          Ver relatórios passados <FaArrowRight />
-        </span>
-      </a>
-      <img
-        src="/guy-with-pencil.svg"
-        id="guy-with-pencil-svg"
-        alt="Homem com lápis cômicamente grande"
+    <>
+      <Container>
+        <div className="help_and_close_links">
+          <a href="">
+            Ajuda <TbHelp />
+          </a>
+          <a href="">
+            Fechar aplicativo <TbLogout />
+          </a>
+        </div>
+        <div>
+          <div className="insert_table_button">
+            <img src="/excel-icon.svg" alt="Ícone de arquivo excel" />
+            <p>
+              Clique para selecionar e inserir a tabela de registros de ponto
+            </p>
+          </div>
+          <a href="" className="passed_reports_link">
+            <span>
+              Ver relatórios passados <FaArrowRight />
+            </span>
+          </a>
+        </div>
+        <img
+          src="/guy-with-pencil.svg"
+          id="guy-with-pencil-svg"
+          alt="Homem com lápis cômicamente grande"
+        />
+        <img
+          src="/women-pointing.svg"
+          id="women-pointing-svg"
+          alt="Mulher apontando"
+        />
+        <hr id="svgs-floor" />
+      </Container>
+      <StyledToastContainer
+        position="top-left"
+        autoClose={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        theme="light"
+        transition={Bounce}
       />
-      <img
-        src="/women-pointing.svg"
-        id="women-pointing-svg"
-        alt="Mulher apontando"
-      />
-      <hr id="svgs-floor" />
-    </Container>
+    </>
   );
 };
+
+const StyledToastContainer = styled(ToastContainer)`
+  .Toastify__toast {
+    background-color: #11368e;
+  }
+  .Toastify__toast-body {
+    color: #f4f6f9;
+  }
+
+  .Toastify__progress-bar {
+    background: #ffde21;
+    opacity: 1;
+  }
+
+  .Toastify__close-button {
+    color: #f4f6f9;
+    opacity: 1;
+  }
+`;
