@@ -4,7 +4,7 @@ import { TbHelp, TbLogout } from "react-icons/tb";
 import { Bounce, toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const Container = styled.main`
   display: flex;
@@ -26,13 +26,14 @@ const Container = styled.main`
     top: 16px;
     left: 16px;
 
-    a {
+    a, p {
       display: flex;
       align-items: center;
       gap: 4px;
       font-size: 1.15rem;
       color: #222;
       text-decoration: none;
+      cursor: pointer;
 
       &:hover {
         text-decoration: underline;
@@ -140,8 +141,18 @@ const Container = styled.main`
   }
 `;
 
+declare global {
+  interface Window {
+    utils: {
+      openFile: () => Promise<string[]>;
+      closeApp: () => void;
+    };
+  }
+}
+
 export const MainContent = () => {
-  useEffect(() => {
+  const [xlsxTable, setXlsxTable] = useState<string[] | null>(null);
+  /* useEffect(() => {
     toast("Seu relatório foi gerado! =D", {
       position: "top-right",
       autoClose: 5000,
@@ -153,7 +164,16 @@ export const MainContent = () => {
       theme: "light",
       transition: Bounce,
     });
-  }, []);
+  }, []); */
+
+  const handleInsertTableClick = async () => {
+    const filesPaths: string[] = await window.utils.openFile();
+
+    if (filesPaths && filesPaths.length > 0) {
+      setXlsxTable(filesPaths);
+      toast("Tabela inserida com sucesso! =D");
+    }
+  };
 
   return (
     <>
@@ -162,17 +182,21 @@ export const MainContent = () => {
           <a href="">
             Ajuda <TbHelp />
           </a>
-          <a href="">
+          <p onClick={() => window.utils.closeApp()}>
             Fechar aplicativo <TbLogout />
-          </a>
+          </p>
         </div>
         <div>
-          <div className="insert_table_button">
+          <div className="insert_table_button" onClick={handleInsertTableClick}>
             <img src="/excel-icon.svg" alt="Ícone de arquivo excel" />
             <p>
               Clique para selecionar e inserir a tabela de registros de ponto
             </p>
           </div>
+          <ul>
+            {xlsxTable &&
+              xlsxTable.map((table, index) => <li key={index}>{table}</li>)}
+          </ul>
           <a href="" className="passed_reports_link">
             <span>
               Ver relatórios passados <FaArrowRight />
