@@ -4,7 +4,7 @@ import { TbHelp, TbLogout } from "react-icons/tb";
 import { Bounce, toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const Container = styled.main`
   display: flex;
